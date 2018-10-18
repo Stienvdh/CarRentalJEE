@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import rental.CarType;
@@ -20,27 +21,32 @@ public class Main extends AbstractTestAgency<CarRentalSessionRemote,ManagerSessi
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         System.out.println("found rental companies: "+session.getAllRentalCompanies());
+        Main main = new Main("simpleTrips");
+	main.run();
+    }
+
+    public Main(String scriptFile) throws Exception {
+        super(scriptFile);
     }
 
     @Override
-    protected Object getNewReservationSession(String name) throws Exception {
+    protected CarRentalSessionRemote getNewReservationSession(String name) throws Exception {
         InitialContext context = new InitialContext();
         session = (CarRentalSessionRemote) context.lookup(CarRentalSessionRemote.class.getName());
         return session;
     }
 
     @Override
-    protected Object getNewManagerSession(String name, String carRentalName) throws Exception {
+    protected ManagerSessionRemote getNewManagerSession(String name, String carRentalName) throws Exception {
         InitialContext context = new InitialContext();
         return (ManagerSessionRemote) context.lookup(ManagerSessionRemote.class.getName());
     }
 
     @Override
     public void checkForAvailableCarTypes(CarRentalSessionRemote session, Date start, Date end) throws Exception{
-        // nieuwe methode aangemaakt in CarRentalSession
-        List<CarType> result = session.getAvailableCarTypes(start, end);
+        Set<CarType> result = session.getAvailableCarTypes(start, end);
         for (CarType type : result) {
             System.out.println(type.toString());
         }

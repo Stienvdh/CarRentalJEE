@@ -12,21 +12,6 @@ public class ManagerSession implements ManagerSessionRemote {
         return new ArrayList<CarType>(company.getCarTypes());
     }
     
-    public Map<CarType, Integer> getNumberReservationCarType(String rentalCompany) {
-        Map<CarType, Integer> result = new HashMap<CarType, Integer>();
-        for (CarType type: getCarTypes(rentalCompany)) {
-            result.put(type, 0);
-        }
-        CarRentalCompany company = RentalStore.getRental(rentalCompany);
-        for (Car car: company.getCars()) {
-            for (Reservation res: car.getAllReservations()) {
-                int value = result.get(car.getType());
-                result.put(car.getType(), value+1);
-            }
-        }
-        return result;
-    }
-    
     public String getBestRenter(String rentalCompany) {
         Map<String, Integer> result = new HashMap<String, Integer>();
         CarRentalCompany company = RentalStore.getRental(rentalCompany);
@@ -50,11 +35,12 @@ public class ManagerSession implements ManagerSessionRemote {
         Map<String, Integer> result = new HashMap<String,Integer>();
         CarRentalCompany company = RentalStore.getRental(carRentalCompany);
         for (CarType carType : getCarTypes(carRentalCompany)) {
-            result.put(carType.toString(), 0);
+            result.put(carType.getName(), 0);
         }
         for (Car car : company.getCars()) {
             for (Reservation res : car.getAllReservations()){
-                
+                int value = result.get(car.getType().getName());
+                result.put(car.getType().getName(), value+1);
             }
         }
         return result;

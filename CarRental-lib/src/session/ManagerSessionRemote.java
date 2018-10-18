@@ -17,7 +17,7 @@ import rental.CarType;
 public interface ManagerSessionRemote {
 
     List<CarType> getCarTypes(String rentalCompany);
-    Map<CarType, Integer> getNumberReservationCarType(String rentalCompany);
     String getBestRenter(String rentalCompany);
     public int getNumberReservationsBy(String clientName);
+    Map<String,Integer> getNbReservationCarType(String carRentalCompany);
 }

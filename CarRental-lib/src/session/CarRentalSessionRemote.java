@@ -14,5 +14,5 @@ public interface CarRentalSessionRemote {
     Quote createQuote(ReservationConstraints constraints, String client) throws ReservationException;
     List<Quote> getCurrentQuotes();
     void confirmQuotes() throws ReservationException;
-    public List<CarType> getAvailableCarTypes(Date start, Date end);
+    Set<CarType> getAvailableCarTypes(Date start, Date end);
 }
