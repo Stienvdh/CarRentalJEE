@@ -52,6 +52,18 @@ public class CarRentalSession implements CarRentalSessionRemote {
         }
     }
     
-    
+    public List<CarType> getAvailableCarTypes(Date start, Date end) {
+        List<CarType> available = new ArrayList<CarType>();
+        Map<String, CarRentalCompany> rentals = RentalStore.getRentals();
+        for (String company : rentals.keySet()) {
+            for (Car car : RentalStore.getRental(company).getCars()) {
+                if (car.isAvailable(start, end)) {
+                    available.add(car.getType());
+                    // hier eventueel nog checken op duplicate carTypes in List
+                }
+            }
+        }
+        return available;
+    }
     
 }
