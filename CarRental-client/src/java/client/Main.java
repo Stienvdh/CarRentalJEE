@@ -62,13 +62,7 @@ public class Main extends AbstractTestAgency<CarRentalSessionRemote,ManagerSessi
     public List<Reservation> confirmQuotes(CarRentalSessionRemote session, String name) throws Exception {
         // ook mogelijk om een lijst met confirmed reservations bij te houden in CarRentalSession
         // of om confirmQuotes een List<Reservation> terug te laten geven
-        session.confirmQuotes();
-        List<Quote> quotes = session.getCurrentQuotes();
-        List<Reservation> reservations = new ArrayList<Reservation>();
-        for(Quote quote : quotes) {
-            reservations.add((Reservation)quote);
-        }
-        return reservations;
+        return session.confirmQuotes();
     }
     
     @Override

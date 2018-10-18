@@ -34,7 +34,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
         throw new ReservationException("No car for given contraints available.");
     }
     
-    public void confirmQuotes() throws ReservationException {
+    public List<Reservation> confirmQuotes() throws ReservationException {
         List<Reservation> confirmedReservations = new ArrayList<Reservation>();
         for (Quote quote: getCurrentQuotes()) {
             CarRentalCompany company = RentalStore.getRental(quote.getRentalCompany());
@@ -50,6 +50,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
                 throw new ReservationException("Cannot confirm all reservations.");
             }
         }
+        return confirmedReservations;
     }
     
     public Set<CarType> getAvailableCarTypes(Date start, Date end) {
